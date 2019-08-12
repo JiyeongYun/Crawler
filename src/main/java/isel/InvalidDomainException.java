@@ -1,7 +1,7 @@
 package isel;
 
 @SuppressWarnings("serial")
-public class InvalidDomainException extends Exception{
+public class InvalidDomainException extends Exception {
 
 	public InvalidDomainException() {
 		this("Domain is invalid.");

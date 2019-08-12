@@ -17,13 +17,13 @@ public class JQLManager {
 
 	// only project
 	public String getJQL1() {
-		return JQL_FRAGMENT1 + this.projectKey;
-//		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2;
+//		return JQL_FRAGMENT1 + this.projectKey;
+		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2;
 	}
 
 	// project + option using issueKey
 	public String getJQL2(String issueKey) {
-		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT3 + issueKey;
+		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2 + JQL_FRAGMENT3 + issueKey;
 	}
 
 	public String getEncodedJQL(String jql) throws UnsupportedEncodingException {

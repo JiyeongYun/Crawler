@@ -1,7 +1,7 @@
 package isel;
 
 @SuppressWarnings("serial")
-public class InvalidProjectKeyException extends Exception{
+public class InvalidProjectKeyException extends Exception {
 
 	public InvalidProjectKeyException() {
 		this("Project Key is invalid");

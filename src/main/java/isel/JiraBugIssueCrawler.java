@@ -11,7 +11,7 @@ public class JiraBugIssueCrawler {
 	private String domain;
 	private String projectKey;
 	private String path;
-	
+
 	private String encodedJql;
 	private String linkUrl;
 	private boolean isSucceed;
@@ -22,12 +22,12 @@ public class JiraBugIssueCrawler {
 //	private static int disconnectionCausedByInvalidProjectKeyCount = 0;
 
 //	private static final int MAX_DISCONNECTION = 50; //TODO using mathematical methods to improve
-	private static final String DEFAULT_PATH = System.getProperty("user.dir"); //current working directory
-	
-	public JiraBugIssueCrawler(String domain, String projectKey) throws InvalidDomainException{
+	private static final String DEFAULT_PATH = System.getProperty("user.dir"); // current working directory
+
+	public JiraBugIssueCrawler(String domain, String projectKey) throws InvalidDomainException {
 		this(domain, projectKey, DEFAULT_PATH);
 	}
-	
+
 	public JiraBugIssueCrawler(String domain, String projectKey, String path) throws InvalidDomainException {
 		this.domain = validateDomain(domain);
 		this.projectKey = projectKey;
@@ -37,19 +37,19 @@ public class JiraBugIssueCrawler {
 	public void run() throws IOException, InvalidProjectKeyException {
 		JQLManager jqlManager = new JQLManager(this.projectKey);
 		URLManager urlManager = new URLManager(this.domain);
-		
+
 		encodedJql = jqlManager.getEncodedJQL(jqlManager.getJQL1());
 		linkUrl = urlManager.getURL(encodedJql);
 		response = getResponse(linkUrl);
 		isSucceed = requestSucceed(response.statusCode());
 
 		issueKeyList.clear();
-		
+
 		while (isSucceed) {
 			JSONManager jsonManager = new JSONManager();
 			jsonManager.sliceJson(linkUrl);
 			jsonManager.getIssueKey();
-			
+
 			if (jsonManager.getIssueTotalNum() <= 1000) {
 				break;
 			}
@@ -61,10 +61,10 @@ public class JiraBugIssueCrawler {
 			isSucceed = requestSucceed(response.statusCode());
 
 		}
-		
+
 		FileManager fileManager = new FileManager(this.path, this.domain, this.projectKey, issueKeyList);
-		fileManager.storeCSVFile();		
-		
+		fileManager.storeCSVFile();
+
 	}
 
 //	private void offInvalidProjectKeyChecking() {

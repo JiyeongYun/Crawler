@@ -13,7 +13,7 @@ public class FileManager {
 	private String domain;
 	private String projectKey;
 	private ArrayList<String> issueKeyList = new ArrayList<>();
-	
+
 	public FileManager(String path, String domain, String projectKey, ArrayList<String> issueKeyList) {
 		super();
 		this.path = path;
@@ -21,32 +21,31 @@ public class FileManager {
 		this.projectKey = projectKey;
 		this.issueKeyList = issueKeyList;
 	}
-	
+
 	private static String validateTeamName(String domain) {
 		String[] elements = domain.split("\\.");
-		return (elements.length == 3) ? domain.substring(domain.indexOf('.') + 1, domain.lastIndexOf('.')) : domain; //TeamName is between . marks in domain.
+		return (elements.length == 3) ? domain.substring(domain.indexOf('.') + 1, domain.lastIndexOf('.')) : domain; // TeamName is between . marks in domain.
 	}
-	
+
 	public void storeCSVFile() throws IOException {
-		
+
 		String issueKeysWithComma = String.join("\n", issueKeyList);
-		
-		//Set File Name
-		Date date= new Date();
+
+		// Set File Name
+		Date date = new Date();
 		Timestamp timeStamp = new Timestamp(date.getTime());
 		String teamName = validateTeamName(this.domain);
-		String dir = this.path + File.separator + teamName + this.projectKey + File.separator;
-		String savedFileName = dir + teamName + this.projectKey + "IssueKeys" + timeStamp + ".csv";
-		
+		String directory = this.path + File.separator + teamName + this.projectKey + File.separator;
+		String savedFileName = directory + teamName + this.projectKey + "IssueKeys" + timeStamp + ".csv";
+
 		System.out.println("\n\tCollecting Issue keys into " + savedFileName);
-		
-		//Make file
+
+		// Make file
 		File savedFile = new File(savedFileName);
 		savedFile.getParentFile().mkdirs();
 		FileUtils.write(savedFile, issueKeysWithComma, "UTF-8");
-		
+
 		System.out.println("\tCollecting completed.");
 	}
-	
-}
 
+}

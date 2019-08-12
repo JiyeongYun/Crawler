@@ -38,15 +38,30 @@ public class JBICDemonstrator {
 	private Options createOptions() {
 		Options options = new Options();
 
-		options.addOption(Option.builder("d").hasArg().required().longOpt("domain")
-				.desc("Set domain in URL (ex. issues.apache.org)").build());
+		options.addOption(Option.builder("d")
+				.hasArg()
+				.required()
+				.longOpt("domain")
+				.desc("Set domain in URL (ex. issues.apache.org)")
+				.build());
 
-		options.addOption(
-				Option.builder("p").hasArg().required().longOpt("Set project key").desc("Set project key").build());
+		options.addOption(Option.builder("p")
+				.hasArg()
+				.required()
+				.longOpt("Set project key")
+				.desc("Set project key")
+				.build());
 
-		options.addOption(Option.builder("h").longOpt("help").desc("Help").build());
-
-		options.addOption(Option.builder("D").hasArg().longOpt("path").desc("Set a path to store csv files").build());
+		options.addOption(Option.builder("h")
+				.longOpt("help")
+				.desc("Help")
+				.build());
+		
+		options.addOption(Option.builder("D")
+				.hasArg()
+				.longOpt("path")
+				.desc("Set a path to store csv files")
+				.build());
 
 		return options;
 	}

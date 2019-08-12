@@ -27,7 +27,7 @@ public class JBICDemonstrator {
 	private void run(String[] args) throws ParseException, IOException, InvalidDomainException, InvalidProjectKeyException {
 		
 		//args[0] : domain
-		//여기서는 임의로 projectKey값을
+		//args[1] : projectKey
 		this.domain = args[0];
 		this.projectKey = args[1];
 

@@ -7,10 +7,8 @@ public class JQLManager {
 	private String projectKey;
 
 	private static final String JQL_FRAGMENT1 = "project = ";
-	private static final String JQL_FRAGMENT1_2 = " AND issuetype = Bug AND resolution = fixed ";
-	private static final String JQL_FRAGMENT2 = " AND issueKey < ";
-	private static final String JQL_FRAGMENT3 = " AND issueKey <= '";
-	private static final String JQL_FRAGMENT4 = "'";
+	private static final String JQL_FRAGMENT2 = " AND issuetype = Bug AND resolution = fixed ";
+	private static final String JQL_FRAGMENT3 = " AND issueKey < ";
 
 	//constructor
 	public JQLManager(String projectKey) {
@@ -21,21 +19,12 @@ public class JQLManager {
 	//only project
 	public String getJQL1() {
 		return JQL_FRAGMENT1 + this.projectKey;
+//		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2;
 	}
 
-	// project + option
+	// project + option using issueKey
 	public String getJQL2(String issueKey) {
-		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2 + issueKey;
-	}
-	
-//	// project + period
-//	public String getJQL3(String issueKey) {
-//		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT3 + start + JQL_FRAGMENT4;
-//	}
-	
-	//project + option + period
-	public String getJQL4(int start) {
-		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2 + JQL_FRAGMENT3 + start + JQL_FRAGMENT4;
+		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT3 + issueKey;
 	}
 
 	public String getEncodedJQL(String jql) throws UnsupportedEncodingException {

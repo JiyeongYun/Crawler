@@ -49,42 +49,42 @@ public class SeleniumManager {
 		String apacheRegex = "([0-9]){2}\\/([A-Z])\\w+\\/([0-9][0-9])\\s([0-9][0-9]):([0-9][0-9])";
 		String mongoDBRegex = "([A-Z|a-z]{3}) ([0-9]{2} 20[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) ([A-Z|a-z]{2})";
 		String created = "";
-		
+
 		driver.get(url);
-		
+
 		WebElement parsing = driver.findElement(By.xpath("//*[@id=\"created-val\"]/time"));
-		
+
 		Thread.sleep(5000);
-	
-		if(parsing.getText().contains(apacheRegex)) {
-			//03/Aug/19 00:16 
+
+		if (parsing.getText().contains(apacheRegex)) {
+			// 03/Aug/19 00:16
 			System.out.println("apache selenium manager 실행 ? ? ? ?");
-			
+
 			String[] date = parsing.getText().split(" ")[0].split("/");
 			String time = parsing.getText().split(" ")[1];
-			
+
 			String year = date[2].trim();
 			String month = MONTHLIST.get(date[1].trim()).toString();
 			String day = date[0].trim();
-			
+
 			created = "20" + year + "-" + month + "-" + day + " " + time;
-		}else if(parsing.getText().contains(mongoDBRegex)) {
-			//Aug 07 2019 03:07:37 PM GMT+0000
+		} else if (parsing.getText().contains(mongoDBRegex)) {
+			// Aug 07 2019 03:07:37 PM GMT+0000
 			System.out.println("mongodb selenium manager 실행 ? ? ? ?");
-			
+
 			String[] date = parsing.getText().split(" ")[0].split(" ");
 			String[] time = date[3].split(":");
-			
+
 			String year = date[2].trim();
 			String month = MONTHLIST.get(date[0].trim()).toString();
 			String day = date[1].trim();
-			
+
 			String hour = time[0].trim();
 			String min = time[1].trim();
-			
+
 			created = year + "-" + month + "-" + day + " " + hour + ":" + min;
 		}
-		
+
 		return created;
 	}
 }

@@ -19,7 +19,7 @@ public class JiraBugIssueCrawler {
 	public URLManager urlManager;
 	public JSONManager jsonManager;
 	public SeleniumManager seleniumManager;
-	
+
 	public static ArrayList<String> issueKeyList = new ArrayList<>();
 	private static boolean invalidProjectKeyChecker = true;
 	private static int disconnectionCausedByInvalidProjectKeyCount = 0;
@@ -45,7 +45,7 @@ public class JiraBugIssueCrawler {
 		isSucceed = requestSucceed(response.statusCode());
 
 		issueKeyList.clear();
-		
+
 		while (isSucceed) {
 			jsonManager.sliceJson(linkUrl);
 			jsonManager.getIssueKey();
@@ -60,14 +60,14 @@ public class JiraBugIssueCrawler {
 //			linkUrl = urlManager.getURL(encodedJql);
 //			response = getResponse(linkUrl);
 //			isSucceed = requestSucceed(response.statusCode());
-			
+
 			encodedJql = jqlManager.getEncodedJQL(jqlManager.getJQL2(issueKeyList.get(issueKeyList.size() - 1)));
 			linkUrl = urlManager.getURL(encodedJql);
 			response = getResponse(linkUrl);
 			isSucceed = requestSucceed(response.statusCode());
 
 		}
-		
+
 //		for (String str : issueKeyList) {
 //			System.out.println("issueKey : " + str);
 //		}

@@ -7,10 +7,10 @@ import org.apache.commons.cli.ParseException;
 public class JBICDemonstrator {
 	private String domain;
 	private String projectKey;
-	
+
 	public static void main(String[] args) {
 		JBICDemonstrator jbicDemonstrator = new JBICDemonstrator();
-		
+
 		try {
 			jbicDemonstrator.run(args);
 		} catch (ParseException e) {
@@ -24,10 +24,11 @@ public class JBICDemonstrator {
 		}
 	}
 
-	private void run(String[] args) throws ParseException, IOException, InvalidDomainException, InvalidProjectKeyException {
-		
-		//args[0] : domain
-		//args[1] : projectKey
+	private void run(String[] args)
+			throws ParseException, IOException, InvalidDomainException, InvalidProjectKeyException {
+
+		// args[0] : domain
+		// args[1] : projectKey
 		this.domain = args[0];
 		this.projectKey = args[1];
 
@@ -38,7 +39,7 @@ public class JBICDemonstrator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

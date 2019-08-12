@@ -10,39 +10,46 @@ public class JiraBugIssueCrawler {
 
 	private String domain;
 	private String projectKey;
+	private String path;
+	
 	private String encodedJql;
 	private String linkUrl;
 	private boolean isSucceed;
 	private Connection.Response response;
 
-	public JQLManager jqlManager;
-	public URLManager urlManager;
-	public JSONManager jsonManager;
-
 	public static ArrayList<String> issueKeyList = new ArrayList<>();
-	private static boolean invalidProjectKeyChecker = true;
-	private static int disconnectionCausedByInvalidProjectKeyCount = 0;
+//	private static boolean invalidProjectKeyChecker = true;
+//	private static int disconnectionCausedByInvalidProjectKeyCount = 0;
 
-	public JiraBugIssueCrawler(String domain, String projectKey) throws InvalidDomainException {
+//	private static final int MAX_DISCONNECTION = 50; //TODO using mathematical methods to improve
+	private static final String DEFAULT_PATH = System.getProperty("user.dir"); //current working directory
+	
+	public JiraBugIssueCrawler(String domain, String projectKey) throws InvalidDomainException{
+		this(domain, projectKey, DEFAULT_PATH);
+	}
+	
+	public JiraBugIssueCrawler(String domain, String projectKey, String path) throws InvalidDomainException {
 		this.domain = validateDomain(domain);
 		this.projectKey = projectKey;
+		this.path = path;
 	}
 
-	public void run() throws Exception {
-		jsonManager = new JSONManager();
-		jqlManager = new JQLManager(this.projectKey);
-		urlManager = new URLManager(this.domain);
+	public void run() throws IOException, InvalidProjectKeyException {
+		JQLManager jqlManager = new JQLManager(this.projectKey);
+		URLManager urlManager = new URLManager(this.domain);
+		
 		encodedJql = jqlManager.getEncodedJQL(jqlManager.getJQL1());
 		linkUrl = urlManager.getURL(encodedJql);
 		response = getResponse(linkUrl);
 		isSucceed = requestSucceed(response.statusCode());
 
 		issueKeyList.clear();
-
+		
 		while (isSucceed) {
+			JSONManager jsonManager = new JSONManager();
 			jsonManager.sliceJson(linkUrl);
 			jsonManager.getIssueKey();
-
+			
 			if (jsonManager.getIssueTotalNum() <= 1000) {
 				break;
 			}
@@ -54,19 +61,15 @@ public class JiraBugIssueCrawler {
 			isSucceed = requestSucceed(response.statusCode());
 
 		}
-
-		// print the issueKeys
-		for (String str : issueKeyList) {
-			System.out.println("issueKey : " + str);
-		}
 		
-		System.out.println("Done !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
+		FileManager fileManager = new FileManager(this.path, this.domain, this.projectKey, issueKeyList);
+		fileManager.storeCSVFile();		
+		
 	}
 
-	private void offInvalidProjectKeyChecking() {
-		invalidProjectKeyChecker = false;
-	}
+//	private void offInvalidProjectKeyChecking() {
+//		invalidProjectKeyChecker = false;
+//	}
 
 	private static String validateDomain(String domain) throws InvalidDomainException {
 		String str = domain;

@@ -14,14 +14,11 @@ public class JiraBugIssueCrawler {
 
 	private String encodedJql;
 	private String linkUrl;
-	private boolean isSucceed;
 	private Connection.Response response;
+	private boolean isSucceed;
 
-	public static ArrayList<String> issueKeyList = new ArrayList<>();
-//	private static boolean invalidProjectKeyChecker = true;
-//	private static int disconnectionCausedByInvalidProjectKeyCount = 0;
-
-//	private static final int MAX_DISCONNECTION = 50; //TODO using mathematical methods to improve
+	public static ArrayList<String> issueKeyList = new ArrayList<>();	
+	public static final int LIMIT_ISSUE_NUM = 1000;
 	private static final String DEFAULT_PATH = System.getProperty("user.dir"); // current working directory
 
 	public JiraBugIssueCrawler(String domain, String projectKey) throws InvalidDomainException {
@@ -44,13 +41,13 @@ public class JiraBugIssueCrawler {
 		isSucceed = requestSucceed(response.statusCode());
 
 		issueKeyList.clear();
-
+		
 		while (isSucceed) {
 			JSONManager jsonManager = new JSONManager();
 			jsonManager.sliceJson(linkUrl);
 			jsonManager.getIssueKey();
 
-			if (jsonManager.getIssueTotalNum() <= 1000) {
+			if (jsonManager.getIssueTotalNum() <= LIMIT_ISSUE_NUM) {
 				break;
 			}
 
@@ -66,10 +63,6 @@ public class JiraBugIssueCrawler {
 		fileManager.storeCSVFile();
 
 	}
-
-//	private void offInvalidProjectKeyChecking() {
-//		invalidProjectKeyChecker = false;
-//	}
 
 	private static String validateDomain(String domain) throws InvalidDomainException {
 		String str = domain;

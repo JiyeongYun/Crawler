@@ -66,7 +66,6 @@ public class JBICDemonstrator {
 		return options;
 	}
 
-	// TODO header에 description 추가
 	private void printHelp(Options options) {
 		String header = "...Description about JiraBugIssueCrawler...\n\n";
 		String footer = "\nPlease report issues at https://github.com/HGUISEL/JiraCrawler/issues\n\n";
@@ -96,8 +95,7 @@ public class JBICDemonstrator {
 		return true;
 	}
 
-	private void run(String[] args)
-			throws ParseException, IOException, InvalidDomainException, InvalidProjectKeyException {
+	private void run(String[] args) throws ParseException, IOException, InvalidDomainException, InvalidProjectKeyException {
 		Options options = createOptions();
 
 		if (parseOptions(options, args)) {

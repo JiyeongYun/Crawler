@@ -57,7 +57,7 @@ public class JSONManager {
 		// Crawling the what you want using Copy Selector
 		this.json = doc.select("#content > div.navigator-container > div.navigator-body > div > div > div > div")
 				.attr("data-issue-table-model-state");
-
+		
 		// Slice the json
 		JsonParser jsonParser = new JsonParser();
 		Object object = jsonParser.parse(this.json);

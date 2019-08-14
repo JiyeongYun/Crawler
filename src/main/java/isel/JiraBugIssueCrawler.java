@@ -17,7 +17,7 @@ public class JiraBugIssueCrawler {
 	private Connection.Response response;
 	private boolean isSucceed;
 
-	public static ArrayList<String> issueKeyList = new ArrayList<>();	
+	public static ArrayList<String> issueKeyList = new ArrayList<>();
 	public static final int LIMIT_ISSUE_NUM = 1000;
 	private static final String DEFAULT_PATH = System.getProperty("user.dir"); // current working directory
 
@@ -41,11 +41,10 @@ public class JiraBugIssueCrawler {
 		isSucceed = requestSucceed(response.statusCode());
 
 		issueKeyList.clear();
-		
+
 		while (isSucceed) {
 			JSONManager jsonManager = new JSONManager();
-			jsonManager.sliceJson(linkUrl);
-			jsonManager.getIssueKey();
+			jsonManager.getIssueKey(linkUrl);
 
 			if (jsonManager.getIssueTotalNum() <= LIMIT_ISSUE_NUM) {
 				break;

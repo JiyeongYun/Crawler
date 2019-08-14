@@ -15,13 +15,13 @@ public class JQLManager {
 		this.projectKey = projectKey;
 	}
 
-	// only project
+	// project + options
 	public String getJQL1() {
 //		return JQL_FRAGMENT1 + this.projectKey;
 		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2;
 	}
 
-	// project + option using issueKey
+	// project + options with issueKey
 	public String getJQL2(String issueKey) {
 		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2 + JQL_FRAGMENT3 + issueKey;
 	}

@@ -17,7 +17,6 @@ public class JQLManager {
 
 	// project + options
 	public String getJQL1() {
-//		return JQL_FRAGMENT1 + this.projectKey;
 		return JQL_FRAGMENT1 + this.projectKey + JQL_FRAGMENT2;
 	}
 
